@@ -1,0 +1,52 @@
+A middleware function is a function that gets executed for every incoming connection.
+Usage of middelware in socket.io
+1. Logging 
+2. Authentication
+3. Rate Limiting
+
+Note: this function will be executed only once per connection (even if the connection consists in multiple HTTP requests).
+
+Basic Emit 
+The Socket.IO API is inspired from the Node.js EventEmitter, which means you can emit events on one side and register listeners on the other:
+
+Acknowledgement in socket.io
+Events are great, but in some cases you may want a more classic request-response API. In Socket.IO, this feature is named acknowledgements.
+
+Server side 
+io.on("connection", (socket) => {
+  socket.on("update item", (arg1, arg2, callback) => {
+    console.log(arg1); // 1
+    console.log(arg2); // { name: "updated" }
+    callback({
+      status: "ok"
+    });
+  });
+});
+
+Client side 
+socket.emit("update item", "1", { name: "updated" }, (response) => {
+  console.log(response.status); // ok
+});
+
+
+What is web socket ?
+Web socket is a computer communication protocol providing full duplex communication channel over a 
+single tcp connection 
+
+The HTTP 1.1 (only) Upgrade header can be used to upgrade an already established client/server
+connection to a different protocol (over the same transport protocol). For example, it can be used 
+by a client to upgrade a connection from HTTP 1.1 to HTTP 2.0, or an HTTP or HTTPS connection into a
+WebSocket.
+
+What is polling ? 
+For example when i want to make a chat application without using web Socket for there is one bad
+idea to this. lets assume there are two machine and one server is there 
+
+User A will have to send request to the client weather is there any message for him or not everytime to the server 
+in the same way the other user have to send requet to the serve to check weather there is message for him or not
+
+When user A make a post request to the Server for the user B. The server will not send the respone directly to the user B 
+the user B has to make a request weather there is a message for me or not then the server will send the message and same 
+for the user A 
+
+the continous checking to the server for the message is called polling 
